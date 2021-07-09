@@ -1,0 +1,22 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<import src="../../utils/wxParse/wxParse.wxml" />
+
+
+
+<view class='container'>
+
+
+
+  <view class="push-btn">
+    提交
+  </view>
+  <view class="footer" wx:if="{{_detail.status == 'doing'}}">
+
+  </view>
+
+  <!-- 遮罩层 弹出框， 模态框，海报  -->
+  <van-popup custom-class="popup flex-col-center" show="{{ popupBool }}" overlay="true" bind:click-overlay="showPopup" close-on-click-overlay="true">
+
+  </van-popup>
+</view>

@@ -1,0 +1,17 @@
+.top-line{
+  height: 60rpx;
+  width: 24rpx;
+  background: linear-gradient(rgb(243, 136, 182),rgb(248, 65, 144));
+  margin-right: 25rpx;
+}
+.title{
+  height: 100rpx;
+  padding: 0 25rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+  font-size: 34rpx;
+  font-weight: 700;
+  box-shadow: 0 0 10rpx 1rpx rgba(236, 120, 240, 0.2);
+}
+.content{
+  padding:  30rpx ;
+}

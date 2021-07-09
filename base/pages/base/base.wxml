@@ -1,0 +1,8 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+
+
+<view class="container">
+
+
+</view>

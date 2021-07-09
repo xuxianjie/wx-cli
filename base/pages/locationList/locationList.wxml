@@ -1,0 +1,32 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<van-dialog id="van-dialog" />
+<view class="container">
+
+  <view class='list'>
+    <view hover-class="none" class='item' wx:for="{{locationList}}" wx:key="{{id}}" >
+      <van-swipe-cell right-width="{{ 65 }}" left-width="{{1}}" async-close bind:close="onClose" data-index="{{index}}"> 
+        <van-cell-group>
+          <van-cell size="large" custom-class="location-another" >
+            <view class='cell-info flex-col-center'>
+              <view class='cell-top  flex-row-center'>
+                <view class='flex' style='text-align:left'>{{item.province}}{{item.city}}{{item.district}}{{item.addressDetail}}</view>
+                <view class='tag' style='padding:0 20rpx' wx:if="{{item.isDefault}}">默认</view>
+              </view>
+              <view class='cell-bottom flex-row-center'>
+                <text>{{item.realName}} {{item.mobilePhone}}</text>
+                <image src='../../images/edit.png' bindtap='goChange' data-index='{{index}}'></image>
+              </view>
+            </view>
+          </van-cell>
+        </van-cell-group>
+        <view slot="right">删除</view>
+      </van-swipe-cell>
+
+    </view>
+  </view>
+
+  <navigator url='../locationCreate/locationCreate?type=create' hover-class='none' class='fixed-btn'>
+    添加新地址
+  </navigator>
+</view>

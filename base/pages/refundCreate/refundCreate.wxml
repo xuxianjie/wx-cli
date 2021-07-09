@@ -1,0 +1,129 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<view class='background' wx:if="{{type=='choice'}}">
+  <view class='goods-list' style='border:none'>
+    <view class='goods-item flex-row' wx:for="{{order.orderProductList}}" wx:key="{{id}}">
+      <image src='../../images/hook.png' class='check' hidden="{{!item.shopCheck}}" bindtap='traggleCheck' data-index='{{index}}'></image>
+      <image src='../../images/hook-.png' class='check' hidden="{{item.shopCheck}}" bindtap='traggleCheck' data-index='{{index}}'></image>
+      <view class='head'>
+        <image src='{{filter.filter.addBaseUrl(item.imageUrl)}}'></image>
+      </view>
+      <view class='info flex-col-center flex'>
+        <view class='name'>{{item.productName}}</view>
+        <view class='small-name'>{{item.taste}}{{item.color}}{{item.size}}{{item.spec}}</view>
+        <view class='price'>￥{{item.price}}</view>
+      </view>
+      <view class='operation flex-row-center' wx:if='{{item.quantityType}}'>
+        <image src='../../images/reduce-red.png' class='slice-num' bindtap='sliceNum' data-index='{{index}}'></image>
+        <view class='step-input'>{{item.quantity}}</view>
+        <image src='../../images/plus-red.png' class='add-num' bindtap='addNum' data-index='{{index}}'></image>
+      </view>
+      <view class='operation flex-row-center' wx:else>
+        <view class='step-input'>×{{item.quantity}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='end flex-row-center'>
+
+    <!-- <view class='check'></view> -->
+
+
+
+    <view class='flex-row'>
+      <!-- <view style='padding:25rpx;'> -->
+      <image src='../../images/hook.png' class='check' hidden="{{!shopCheck}}" bindtap='traggleAll'></image>
+      <image src='../../images/hook-.png' class='check' hidden="{{shopCheck}}" bindtap='traggleAll'></image>
+      <!-- </view> -->
+      <view>已选({{totalCount||'0'}})</view>
+    </view>
+
+
+
+
+
+
+    <view class='end-btn' bindtap='traggleType'>确定</view>
+  </view>
+</view>
+<view class='background' wx:if="{{type == 'check'}}">
+  <view class='title flex-row-center' style="margin-bottom: 10rpx">
+    <view class='title-left'>退货信息</view>
+    <view class='title-right' style='color:rgb(237,72,46)'>共{{totalCount}}件,合计 ¥{{totalPrice}}</view>
+  </view>
+  <view class='imgs'>
+    <image src='{{filter.filter.addBaseUrl(item.imageUrl)}}' wx:for="{{productList}}"></image>
+  </view>
+
+
+  <view class='title flex-row-center' style="margin-bottom: 10rpx" bindtap='selectReason'>
+    <view class='title-left'>退货原因</view>
+    <view style="color:red;flex:1;text-align:right">{{radioList[radio]}}</view>
+    <image src="../../images/leftarrow.png" style='width:35rpx;height:35rpx;margin-left:30rpx'></image>
+  </view>
+
+
+  <view class='word-box'>
+    <!-- <picker> -->
+    <view class='title flex-row-center'>
+      <view>退款说明
+        <text class='small-title'>（选填）</text>
+      </view>
+      <!-- <image src='../../images/'></image> -->
+    </view>
+    <!-- </picker> -->
+    <textarea maxlength='300' bindinput='inputReason'></textarea>
+  </view>
+  <view class='up-box' style="  border-top: 10rpx solid rgb(235, 235, 235);">
+    <view class='title flex-row'>
+      上传凭证
+      <text class='small-title'>（选填）</text>
+    </view>
+    <view class='img-list'>
+      <view class='item' wx:for="{{imageList}}" wx:key="{{item}}">
+        <image src="{{item}}" mode='aspectFill'></image>
+        <view class='delete' catchtap='deleteImages' data-index="{{index}}">
+          <image src='../../images/delete.png' data-index="{{index}}"></image>
+        </view>
+      </view>
+      <view class='add-img' bindtap="getImageList" hidden="{{imageList.length >=6}}">
+        <image src='../../images/photo.png'></image>
+      </view>
+    </view>
+  </view>
+
+
+
+  <view class='end flex-row-center' style="z-index:0 !important">
+    <view bindtap='postInfo' class='end-btn' style="width:100% !important">
+      申请退货
+    </view>
+  </view>
+
+
+
+
+
+
+
+
+
+
+</view>
+
+
+<van-popup custom-class="popup flex-col-center" show="{{ show }}" overlay="true" bind:click-overlay="showPopup" close-on-click-overlay="true" position="bottom" custom-style="height: 50%">
+  <view class='express-box'>
+    <view class='express-top'>
+      <view class='express-title'>
+        <view style="text-align: center;flex: 1;margin-left: 40rpx;padding:40rpx">退款原因</view>
+        
+        <image src='../../images/reason-close.png' catchtap='showPopup'></image>
+      </view>
+    </view>
+    <view class='express-detail'>
+      <van-radio-group value="{{ radio }}" bind:change="onChange">
+        <van-radio name="{{index}}" class="item" wx:for='{{radioList}}'>{{item}}</van-radio>
+      </van-radio-group>
+    </view>
+  </view>
+</van-popup>

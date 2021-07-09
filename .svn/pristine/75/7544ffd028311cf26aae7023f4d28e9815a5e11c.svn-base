@@ -1,0 +1,215 @@
+<import src="../../utils/wxParse/wxParse.wxml" />
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<view class='container'>
+  <!-- 轮播图 -->
+  <view class='carousel-box'>
+    <swiper current='{{carouselCurrent}}' indicator-dots="{{product.imageUrls.length>0}}" indicator-color="#e5e5e5" indicator-active-color="#583ec4" autoplay interval="4000" circular>
+      <swiper-item wx:for="{{product.imageUrls}}" wx:key="{{index}}">
+        <image data-url='{{filter.filter.addBaseUrl(item)}}' bindtap="carouselImgPreview" src='{{filter.filter.addBaseUrl(item)}}' mode="aspectFit"></image>
+      </swiper-item>
+      <swiper-item wx:if="{{!product.imageUrls||product.imageUrls.length<=0}}">
+        <image data-url='{{item}}' bindtap="carouselImgPreview" src='../../images/product-banner.png' mode="aspectFill"></image>
+      </swiper-item>
+      <view class='coin-tags' wx:if="{{product.isExchange || product.isLimit ||product.tags}}">
+        <view wx:if="{{product.tags}}">{{product.tags}}</view>
+
+        <view wx:if="{{product.isLimit}}">限购{{product.limitCount||0}}件</view>
+        <view wx:if="{{product.isExchange}}">{{product.coinPrice}}积分换购</view>
+      </view>
+    </swiper>
+
+  </view>
+  <view class="spe-tips flex-row" wx:if="{{product.appointmentProduct }}">
+    <view class="flex" style="position:relative;z-index:10">¥{{product.price || 0}}
+      <image class="background" src="../../images/appoint-bg.png"></image>
+    </view>
+    <view class="tips-content" wx:if="{{ appointStatus != 'rush'}}">
+      <!-- <view style="font-size:28rpx;">距预约开始</view> -->
+      <view class="flex flex-row-center appoint-ben" wx:if="{{appointStatus == 'unOpen'}}" style="font-size:28rpx;">距预约开始</view>
+      <view class="flex flex-row-center appoint-ben" wx:if="{{appointStatus == 'open'}}" style="font-size:28rpx;">距可预约结束</view>
+      <view class="flex flex-row-center appoint-ben" wx:if="{{appointStatus == 'unRush'}}" style="font-size:28rpx;">距抢购开始</view>
+      <van-count-down use-slot time="{{ time }}" bind:change="onChange">
+        <text class="item">{{ timeData.days }}</text>:
+        <text class="item">{{ timeData.hours }}</text>:
+        <text class="item">{{ timeData.minutes }}</text>:
+        <text class="item">{{ timeData.seconds }}秒</text>
+      </van-count-down>
+    </view>
+  </view>
+  <view class="info-box">
+    <view class="info">
+      <view class="info-name flex-row">
+        <view class="pro-tag" wx:if="{{product.isHot}}">热门</view>
+        <view class="pro-tag" wx:if="{{product.isNew}}">新品</view>
+        <view style="font-size:32rpx" class="flex">{{product.name}}</view>
+      </view>
+      <view class="info-bottom flex-row-center">
+        <view class="info-b-l">
+          <text wx:if="{{product.discountPrice}}">¥{{product.discountPrice || 0 }}</text>
+          <text>¥{{product.price || 0}}</text>
+        </view>
+        <view>
+          <text style="margin-right:20rpx">库存：{{product.stock ||0}}件</text>
+
+          <text>销量：{{product.totalSales ||0}}件</text>
+
+        </view>
+      </view>
+    </view>
+    <view class="flex-row-center info-bottom">
+      <view class="flex-row">
+        <image src="../../images/sale-icon.png"></image>服务承诺</view>
+      <view class="flex-row">
+        <image src="../../images/seven-icon.png"></image>七天无理由退</view>
+      <view class="flex-row">
+        <image src="../../images/coin-star.png"></image>正品保障</view>
+      <view class="flex-row">
+        <image src="../../images/card-icon.png"></image>支持信用卡</view>
+    </view>
+  </view>
+  <view class="other">
+    <view class="other-info" bindtap="openPopup" data-type="">
+      <view>规格</view>
+      <view>
+        <view class=" flex-row" hidden="{{choiceIdx===null}}">{{product.productAttrList[choiceIdx].taste||''}}{{product.productAttrList[choiceIdx].color||''}}{{product.productAttrList[choiceIdx].size||''}}{{product.productAttrList[choiceIdx].spec||''}}</view>
+        <view class=" flex-row" hidden="{{choiceIdx!==null}}">未选择</view>
+      </view>
+      <image src="../../images/arrow-r.png"></image>
+    </view>
+    <view class="other-info">
+      <view>运费</view>
+      <view wx:if="{{expressFee}}">邮费{{expressFee||0}}元
+        <text wx:if="{{freeExpressFee}}">满{{freeExpressFee}}元免邮</text>
+      </view>
+      <view wx:if="{{!freeExpressFee}}">免邮
+
+      </view>
+    </view>
+  </view>
+  <view class="title">
+    - 详情 -
+  </view>
+  <view class='content-info'>
+    <template is="wxParse" data="{{wxParseData:content.nodes}}" />
+
+  </view>
+  <!-- <view class="title">
+    - 评价 -
+  </view> -->
+  <!-- <button open-type="contact" class="service-btn">
+    <image src="../../images/service_icon.png"></image>
+    <text>客服</text>
+  </button> -->
+  <view class="footer flex-row shadow">
+    <view class="flex flex-row footer-l">
+      <button class="flex flex-col-center-center" bindtap="openPoster">
+        <image src="../../images/share-icon.png"></image>
+        分享
+      </button>
+      <view class="flex flex-col-center-center" bindtap="changeFavorite">
+        <image src="../../images/add-icon.png" wx:if="{{!product.isFavorite}}"></image>
+        <image src="../../images/add-icon-on.png" wx:if="{{product.isFavorite}}"></image>
+        收藏
+      </view>
+      <navigator url="../cart/cart" style="position:relative" class="flex flex-col-center-center">
+        <view wx:if="{{carNum}}" class="car-num">{{carNum||0}}</view>
+        <image src="../../images/car-icon.png"></image>
+        购物车
+      </navigator>
+    </view>
+    <view class="flex flex-row footer-r" wx:if="{{!product.appointmentProduct}}">
+      <view class="flex" bindtap="openPopup" data-type="cart">加入购物车</view>
+      <view class="flex" bindtap="openPopup" data-type="buy">立即购买</view>
+    </view>
+  </view>
+  <view class="footer flex-row shadow footer-appoint" wx:if="{{product.appointmentProduct}}">
+    <view class="flex  " wx:if="{{appointStatus == 'unOpen'}}">预约未开始</view>
+    <view class="flex  " wx:if="{{appointStatus == 'open' && !product.isAppointment}}" bindtap="appoint">点击预约</view>
+    <view class="flex  " wx:if="{{appointStatus == 'open' && product.isAppointment}}" bindtap="showTips">已预约</view>
+    <view class="flex  " wx:if="{{appointStatus == 'unRush' && product.isAppointment}}" bindtap="showTips">抢购未开始</view>
+    <view class="flex black " wx:if="{{appointStatus == 'unRush' && !product.isAppointment  }}">未预约</view>
+    <view class="flex  black" wx:if="{{appointStatus == 'rush' && !product.isAppointment  }}">未预约</view>
+    <view class="flex  " wx:if="{{appointStatus == 'rush' && product.stock>0 && product.isAppointment}}" bindtap="openPopup" data-type="buy">点击抢购</view>
+    <view class="flex org " wx:if="{{appointStatus == 'rush' && product.stock<=0}}" bindtap="openPopup" data-type="buy">已售罄</view>
+
+  </view>
+
+  <!-- 遮罩层 弹出框， 模态框，海报  -->
+  <view class='share_canvas'>
+    <view class='background draw'>
+      <image class='draw' data-type='image' 
+      data-url="{{product.tempValue2?filter.filter.addBaseUrl(product.tempValue2):'../../images/product-bg.png'}}" 
+          src="{{product.tempValue2?filter.filter.addBaseUrl(product.tempValue2):'../../images/product-bg.png'}}"></image>
+    </view>
+    <view class="draw content-box" data-type="text">
+      <view class='background draw'>
+        <image class='draw' data-type='background-image' data-url="../../images/wite.png" src='../../images/wite.png'></image>
+      </view>
+      <image class="draw head-img" data-type='image' data-url="{{filter.filter.addBaseUrl(product.imageUrls[0])}}" src='{{filter.filter.addBaseUrl(product.imageUrls[0])}}'></image>
+
+      <view class="draw poster-name " data-type="text">
+
+
+        <view class="draw draw-price-box " data-type="text">
+          <view class='background draw'>
+            <image class='draw' data-type='background-image' data-url="../../images/price-bg.png" src='../../images/price-bg.png'></image>
+          </view>
+          <text class="draw-discount-price draw" data-type="text" data-text="¥{{product.discountPrice || product.price}}">¥{{product.discountPrice || product.price}}</text>
+
+        </view>
+        <view class="hide-word hide draw" style="width:100%" data-type="text" data-text="{{ product.name}}">{{product.name }}</view>
+      </view>
+      <view class="line draw">
+        <image class='code draw' data-type='image' data-url="../../images/Separate.png" src='../../images/Separate.png'></image>
+      </view>
+      <view class="content-bottom draw">
+        <view class="product-icon draw">
+          <image class="draw" data-type="image" data-url="../../images/product-icon.png" src='../../images/product-icon.png'></image>
+        </view>
+        <view class="codeImage draw">
+          <image class="draw" data-type="image" data-url="{{filter.filter.addBaseUrl(product.codeUrl)}}" src='{{filter.filter.addBaseUrl(product.codeUrl)}}'></image>
+        </view>
+      </view>
+      <view class="code-word draw " data-type="text" data-text="长按识别小程序码">长按识别小程序码</view>
+    </view>
+  </view>
+
+  <canvas canvas-id="canvas1" style="width: 565rpx;height:1010rpx;" id="canvas1" catchtap="previewPoster"></canvas>
+
+  <van-popup custom-class="poster flex-col-center-center" show="{{ posterBool }}" overlay="true" bind:click-overlay="showPoster" close-on-click-overlay="true">
+    <image src='{{posterImg}}' style="width: 565rpx;height:1010rpx;" catchtap="previewPoster"></image>
+    <button catchtap='savePoster'>保存到手机</button>
+  </van-popup>
+
+  <van-popup custom-class="popup" show="{{ popupBool }}" overlay="true" bind:click-overlay="showPopup" close-on-click-overlay="true" position="bottom">
+    <view class='show-box'>
+      <view class='coin-tags' wx:if="{{product.isExchange}}">
+        {{product.productAttrList[choiceIdx].coinPrice||product.coinPrice || product.coinPrice ||0}}积分换购
+      </view>
+      <view class='show-top flex-row'>
+
+        <image class='good-img' src='{{filter.filter.addBaseUrl(product.imageUrl)}}'></image>
+        <view class='flex-col-center flex'>
+          <text>{{product.name||'桂格'}}</text>
+          <text class="price-word">￥{{product.productAttrList[choiceIdx].discountPrice||product.discountPrice || product.price ||0}}</text>
+        </view>
+        <image src='../../images/wrong.png' class='close' catchtap='showPopup'></image>
+      </view>
+      <view class='show-info flex-row'>
+        <view wx:for="{{product.productAttrList}}" class="{{choiceIdx === index?'active':''}} flex-row" data-index="{{index}}" catchtap='traggleChoice'>{{item.taste||''}}{{item.color||''}}{{item.size||''}}{{item.spec||''}}</view>
+      </view>
+      <view class='num-box flex-row'>
+        <view>数量</view>
+        <view class='operation flex-row-center'>
+          <image src='../../images/reduce.png' class='slice-num' bindtap='sliceNum'></image>
+          <input class='step-input' value="{{quantity}}" type="number" bindinput="inputNum"></input>
+          <image src='../../images/plus.png' class='add-num' bindtap='addNum'></image>
+        </view>
+        <view wx:if="{{product.isLimit}}" class="price-word"> 限购{{product.limitCount}}件 </view>
+      </view>
+      <!-- <view class='show-bottom flex-row-center-center theme-back'>{{type=="normal"?"确定":"发起拼团"}}</view> -->
+      <view class='show-bottom flex-row-center-center theme-back' bindtap='check'>确定</view>
+    </view>
+  </van-popup>
+</view>

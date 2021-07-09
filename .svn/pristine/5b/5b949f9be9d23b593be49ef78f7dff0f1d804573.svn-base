@@ -1,0 +1,108 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<view class="container">
+  <van-cell size="large" custom-class="location" is-link url="../locationList/locationList" wx:if="{{location}}">
+    <view class='cell-info flex-col-center'>
+      <view class='cell-top  flex-row'>
+        <view style="text-align:left">{{location.province}}{{location.city}}{{location.district}}{{location.addressDetail}}</view>
+        <view class='tags '>默认</view>
+      </view>
+      <view class='cell-bottom'>{{location.realName}} {{location.mobilePhone}}</view>
+
+    </view>
+  </van-cell>
+  <van-cell size="large" custom-class="location" is-link url="../locationList/locationList" wx:if="{{!location}}">
+    <view class='cell-info flex-col-center'>
+      <view class='cell-bottom' style='color:#999999;'>你还没有收货地址，请添加一个地址</view>
+    </view>
+  </van-cell>
+  <view class='goods-list'>
+    <view class='goods-item flex-row' wx:for="{{productList}}" wx:key="{{id}}">
+      <view class='head'>
+        <image src='{{filter.filter.addBaseUrl(item.product.imageUrl)||filter.filter.addBaseUrl(item.imageUrl)}}' mode="aspectFill"></image>
+      </view>
+      <view class='info flex-col-center flex'>
+        <view class="price-box">
+          <!-- <view class='level-cirlce' wx:if="{{isToday}}">V{{user.membershipLevel}}</view> -->
+          <block wx:if="{{isToday}}">
+            <image src="../../images/level-one.png" wx:if='{{user.membershipLevel == 1}}' class='level-cirlce'></image>
+            <image src="../../images/level-two.png" wx:if='{{user.membershipLevel == 2}}' class='level-cirlce'></image>
+            <image src="../../images/level-three.png" wx:if='{{user.membershipLevel == 3}}' class='level-cirlce'></image>
+          </block>
+          <view class='price spe-word' wx:if="{{isToday}}" style="align-items:baseline">
+            <!-- <text class="spe-word" style="font-size:22rpx;">会员价:</text> -->
+            <text class="spe-word">￥{{item.discountPrice}}</text>
+          </view>
+          <view class='price price-word {{shoptype=="group"?"spe-word":""}}' wx:if="{{!isToday}}">￥{{item.discountPrice}}</view>
+        </view>
+        <view class='name'>{{item.productName||item.name}}</view>
+        <view class='small-name'>{{item.taste||''}}{{item.color||''}}{{item.size||''}}{{item.spec||''}}</view>
+
+      </view>
+      <view class='operation flex-row-center'>
+        <!-- <view class='slice-num'>-</view>
+        <view class='step-input'>1</view>
+        <view class='add-num'>+</view> -->
+        ×{{item.quantity}}
+      </view>
+    </view>
+    <view class='total'>
+      共{{totalCount}}件商品
+      <text class='{{shoptype=="group"?"spe-word":""}}'> ￥{{totalPrice}}</text>
+    </view>
+  </view>
+  <view class='another-box' wx:if="{{shoptype != 'group'}}">
+    <view class='bottom flex-row-center'>
+      <view class='bottom-left flex-row'>
+        <!-- <view class='tags'>免邮</view> -->
+        <view>运费</view>
+      </view>
+      <view class='bottom-right price-word'>
+        ￥{{totalPrice >= freeExpressFee ? '0.00':expressFee || 0}}
+      </view>
+    </view>
+    <navigator url='../myCoupon/myCoupon?type=detail' hover-class='none' class='box flex-row-center'>
+      <view class='bottom-left'>优惠券</view>
+      <view class='box-right flex-row'>
+        <view class='tag price-back' wx:if="{{coupon}}">
+          <!-- <image src='../../images/orderCoupon.png' class='background-img'></image> -->
+          满{{coupon.coupon.fullValue}}-{{coupon.coupon.reduceValue}}
+        </view>
+        <image src='../../images/leftarrow.png' style='width:25rpx;height:25rpx;'></image>
+
+      </view>
+    </navigator>
+  </view>
+
+
+
+  <view class='end flex-row-center'>
+    <view class='end-word '>总计：
+      <text style='font-size:34rpx;font-weight:700;' class="price-word">￥{{filter.filter.toFixed(discountPrice,2)}}</text>
+    </view>
+    <view class='end-word' wx:if="{{canCoin}}" >
+      总积分:
+       <text style='font-size:34rpx;font-weight:700;color:#FF5402'>{{filter.filter.toFixed(totalCoin,2)}}</text>
+    </view>
+    <view class='end-btn' bindtap='{{shoptype=="group"?"checkGroupOrder":"showPopup"}}'>付款</view>
+  </view>
+
+
+</view>
+<van-popup custom-class="popup flex-col-center" show="{{ popupBool }}" overlay="true" close-on-click-overlay="true" custom-style="height: 50%" >
+  <view class="show-box">
+    <view class="show-title flex-row-center">
+      <view>支付方式</view>
+      <image src="../../images/close.png" bindtap="closePopup"></image>
+    </view>
+    <view class="felx-col-center-center">
+    <van-radio-group value="{{ payType }}" bind:change="catchType"  name="gender">
+      <van-radio name="coin" style='margin-bottom:40rpx;' checked-color="#583EC4"  wx:if="{{canCoin}}">积分支付</van-radio>
+      <van-radio name="weixin"  style='margin-bottom:40rpx;' checked-color="#583EC4">微信支付</van-radio>
+    </van-radio-group>
+    
+    </view>
+    <!-- <view class="show-balance" wx:if="{{ type == 'coin'  }}">您的余额：￥{{user.data.organizationBalance }}</view> -->
+    <view class="check-btn theme-back" bindtap="checkOrder">确认支付</view>
+  </view>
+</van-popup>

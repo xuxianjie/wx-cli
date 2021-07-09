@@ -1,0 +1,40 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+
+
+<view class="container">
+
+  <!-- 活动头部概况 -->
+  <view class="top flex-row-center shadow-bottom" >
+    <view class="top-img">
+      <image src="{{filter.filter.addBaseUrl(_detail.imageUrl)}}" mode="aspectFill"></image>
+    </view>
+    <view class="top-info flex-col-center flex">
+      <view class="top-name">{{_detail.name}}</view>
+      <view class="top-create-time">{{filter.filter.getDate(_detail.createTime,3)}}</view>
+      <view class="top-description">{{_detail.description}}</view>
+    </view>
+  </view>
+
+  <!-- 成员列表 -->
+  <view class='list'>
+    <view class='item' wx:for="{{memberList}}" wx:key = "{{id}}" >
+      <!-- 头像 -->
+      <view class="item-head">
+          <image src="{{item.icon}}" lazy-load mode="aspectFill"/>
+      </view>
+
+      <!-- 信息 -->
+      <view class="item-info flex-col-center flex">
+          <view class="info-top flex-row-center"></view>
+          <view class="info-top flex-row-center"></view>
+      </view>
+
+      <!-- 按钮 -->
+      <view>
+        
+      </view>
+    </view>
+  </view>
+  
+</view>

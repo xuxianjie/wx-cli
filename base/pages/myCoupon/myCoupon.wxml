@@ -1,0 +1,37 @@
+<wxs module="filter" src="../../filter/filter.wxs"></wxs>
+<view class="container">
+    <view class="couponList">
+    
+        <view class='showNo' wx:if="{{showNo}}" >
+          <image src='../../images/Coupon-.png'></image>
+        </view>
+
+
+     <view class="coupon "  wx:for="{{couponList}}"  wx:key="{{item.id}}">
+            <view class="coupon-l">
+                <view class="coupon-l-l " >
+                  <view class="reduce">
+                      <text>¥</text>{{item.coupon.reduceValue}}
+                  </view>
+                  <view class="full">
+                    满{{item.coupon.fullValue}}元可用
+                  </view>
+                </view>
+                <view class="coupon-l-r">
+                    <view class="coupon-l-r-t">
+                       {{item.coupon.name}}
+                    </view>
+                    <view class="coupon-l-r-b ">
+                        {{filter.filter.getDate(item.coupon.effectiveStartTime,2)}}~{{filter.filter.getDate(item.coupon.effectiveEndTime,2)}}
+                    </view>
+                </view>
+            </view>
+            <view class="coupon-r ">
+                <view  bindtap="useCoupon"  data-index="{{index}}">
+                    去使用
+                </view>
+            </view>
+        </view>
+    </view>
+
+</view>

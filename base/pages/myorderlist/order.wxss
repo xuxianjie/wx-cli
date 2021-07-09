@@ -1,0 +1,128 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+.container .tab-list {
+  width: 100%;
+  background-color: #fff;
+  /* box-shadow: 0 0 15rpx 3rpx rgba(0,0,0,.2); */
+}
+
+.van-ellipsis {
+  overflow: visible !important;
+}
+
+.container .tab-list .van-tabs__line {
+  bottom: 12rpx;
+}
+
+.van-tabs--card .van-tabs__wrap {
+  height: 86rpx !important;
+  line-height: 86rpx !important;
+  border-radius: 12rpx !important;
+  background-color: #ebebeb;
+  font-weight: 700;
+}
+
+.tab-nav {
+  height: 86rpx !important;
+  line-height: 86rpx !important;
+  background-color: #ebebeb;
+  font-weight: 700;
+  color: #000;
+}
+
+.tab {
+  height: 86rpx !important;
+  line-height: 86rpx !important;
+  background-color: #ebebeb;
+}
+
+.tab-activie {
+  color: #eb7b81 !important;
+  font-weight: 700 !important;
+}
+
+.van-tabs__line {
+  background-color: #eb7b81 !important;
+}
+
+.container .list {
+  width: 100%;
+  /* background-color: #f3f3f3; *//* padding-top:20rpx;  */
+}
+
+.container .list .item {
+  width: 750rpx;
+  /* margin: 0 auto; *//* margin-bottom: 20rpx; *//* border-radius: 20rpx; */
+  padding: 0 30rpx;
+  overflow: hidden;
+  border-bottom: 10rpx solid #ebebeb;
+}
+
+.container van-panel {
+  /* border-bottom: 10rpx solid #ebebeb; */
+}
+
+.container .list .item .item-b {
+  display: flex;
+  /* justify-content: flex-end; */
+  font-size: 24rpx;
+  height: 70rpx;
+  align-items: center;
+}
+
+.container .list .item .item-b button {
+  border-radius: 30rpx;
+  margin-right: 30rpx;
+}
+
+.container .list .item .item-info {
+  padding: 25rpx 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.container .list .item .item-info .goods {
+  width: 150rpx;
+  height: 150rpx;
+  margin-right: 20rpx;
+  margin-bottom: 25rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+.goods>image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 头部状态 */
+
+.panel-index--van-panel__header-value {
+  font-size: 24rpx;
+  color: #010101 !important;
+  font-weight: 700;
+}
+
+.van-cell__title {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.van-cell {
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+}
+
+.van-panel__footer {
+  padding: 10rpx 0 !important;
+  color: #666;
+}

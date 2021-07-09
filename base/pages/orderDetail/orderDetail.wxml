@@ -1,0 +1,164 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<view class='container'>
+  <view class='top theme-back flex-row-center'>
+    <view style='font-size:28rpx'>
+      {{order.status=='unpaid' ?'待付款':(order.status=='cancel'?'交易取消':(order.status=='delivered'?'已发货':(order.status=='completed'?'交易完成':(order.status=='refunded'?'申请退款成功':(order.status=='fail'?'申请退款失败':(order.status=='refunding'?'申请退款中':(order.status=='unDelivered'?'待发货':(order.status=='received'?'已签收':(order.status == 'paid' ?'已支付':'')))))))))}}
+    </view>
+    <image src='../../images/truck.png' wx:if="{{order.status == 'delivered' || order.status== 'unDelivered' || order.status== 'unDelivered'}}"></image>
+    <image src='../../images/money.png' style='width:60rpx;height:60rpx;' wx:if="{{order.status == 'refunded' || order.status== 'refunding' || order.status== 'fail'}}"></image>
+    <view class='time' wx:if="{{order.status=='completed'}}">
+      {{filter.filter.getDate(order.updateTime,3)}}
+    </view>
+    <view class='time' wx:if="{{order.status=='unpaid'}}">
+      订单将在{{filter.filter.computeTime(cutTime,2)}}后取消
+    </view>
+    <view class='time' wx:if="{{order.status=='received'}}">
+      还剩{{filter.filter.computeTime(cutTime,1)}}自动确认
+    </view>
+  </view>
+
+  <van-cell size="large" custom-class="location">
+    <view class='cell-info flex-col-center'>
+      <view class='cell-top  flex-row'>
+        <view class='flex-row'>
+          <image src='../../images/location-icon-ye.png'></image>{{order.province}} {{order.city}} {{order.district}} {{order.addressDetail}}</view>
+        <!-- <view class='tags' style='padding:0 20rpx'>默认</view> -->
+      </view>
+      <view class='cell-bottom'>{{order.realName}} {{order.mobilePhone}}</view>
+      <!-- <view class='cell-bottom'>你还没有收货地址，请添加一个地址</view> -->
+    </view>
+  </van-cell>
+
+  <view class='goods-list' style='border-bottom:20rpx solid #ebebeb'>
+    <view class='goods-item flex-row' wx:for="{{order.orderProductList}}" wx:key="{{id}}">
+      <view class='head'>
+        <image src='{{filter.filter.addBaseUrl(item.imageUrl)}}' mode='aspectFill'></image>
+      </view>
+      <view class='info flex-col-center flex'>
+        <view class='price'>￥{{item.price ||0}}</view>
+        <view class='name'>{{item.productName}}</view>
+        <view class='small-name'>{{item.taste||''}}{{item.color||''}}{{item.size||''}}{{item.spec||''}}</view>
+      </view>
+      <view class='operation flex-row-center'>
+        <!-- <view class='slice-num'>-</view>
+        <view class='step-input'>1</view>
+        <view class='add-num'>+</view> -->
+        ×{{item.quantity}}
+      </view>
+    </view>
+    <view class='priceList flex-col-center'>
+      <view class='flex-row-center'>
+        <text>商品金额:</text>
+        <text>￥{{filter.filter.toFixed(order.totalProductPrice,2)}}</text>
+      </view>
+      <view class='flex-row-center'>
+        <text>运费:</text>
+        <text>￥{{order.deliveryFee || 0.00}}</text>
+      </view>
+      <view class='flex-row-center'>
+        <text>优惠:</text>
+        <text>-￥{{order.couponFee ||0.00}}</text>
+      </view>
+    </view>
+    <view class='total flex-row-center'>
+      <text>订单金额:</text>
+      <text>￥{{order.totalPrice}}</text>
+    </view>
+  </view>
+
+
+
+
+  <view class='bottom-info flex-col-center'>
+    <view class='title'>订单信息</view>
+    <view class='flex-row'>
+      <text>订单编号：</text>
+      <text>{{order.number}}</text>
+    </view>
+    <view class='flex-row'>
+      <text>下单时间：</text>
+      <text>{{filter.filter.getDate(order.createTime,3)}}</text>
+    </view>
+    <view class='flex-row'>
+      <text>支付方式：</text>
+      <text>微信</text>
+    </view>
+    <!-- <view class='flex-row'>
+      <text>退款原因：</text>
+      <text>微信</text>
+    </view>
+    <view class='flex-row'>
+      <text>退款金额：</text>
+      <text>微信</text>
+    </view>
+    <view class='flex-row'>
+      <text>申请时间：</text>
+      <text>微信</text>
+    </view> -->
+
+  </view>
+
+  <view class='end flex-row-center' wx:if="{{order.status !='unpaid'}}">
+
+    <navigator hover-class='none' url='../refundCreate/refundCreate?orderId={{order.id}}&number={{order.number}}' class='end-btn' wx:if="{{order.status == 'delivered' || order.status == 'paid' || order.status == 'received' }}">{{order.status == 'unDelivered'?'申请退款':'申请退货'}}</navigator>
+
+    <view class='end-btn' wx:if="{{order.status =='delivered' ||order.status =='received'  }}" bindtap='openPopup'>物流详情</view>
+
+    <!-- <view class='end-btn' wx:if="{{order.status =='delivered'}}" bindtap='comfirm'>确认收货</view> -->
+
+
+    <navigator url='../refundDetail/refundDetail?refundId={{order.refundId}}' class='end-btn' wx:if="{{order.status == 'refunding' || order.status == 'refunded' || order.status == 'fail'}}">退货详情</navigator>
+    <view class='end-btn' wx:if="{{order.status =='delivered'}}" bindtap='checkIn'>确认收货</view>
+
+  </view>
+
+
+  <view class="flex-row-center end-paid" wx:if="{{order.status =='unpaid'}}">
+    <view class='end-word'>订单总额 ￥{{order.totalPrice}}</view>
+    <view class='end-btn' bindtap='payOrder'>去支付</view>
+
+  </view>
+
+
+
+
+
+
+
+
+
+
+  <!-- 遮罩层 弹出框， 模态框，海报  -->
+  <van-popup custom-class="popup flex-col-center" show="{{ popupBool }}" overlay="true" bind:click-overlay="showPopup" close-on-click-overlay="true" position="bottom">
+    <view class='express-box'>
+      <view class='express-top'>
+        <view class='express-title flex-row-center'>
+          <view>物流信息</view>
+          <image src='../../images/wrong.png' catchtap='showPopup'></image>
+        </view>
+
+        <view class='express-info'>
+          <view>发货快递： {{order.deliveryExpressName || '暂无'}}
+          </view>
+          <!-- <view>官方电话：95546</view> -->
+          <view>运单号：{{order.deliveryExpressNumber||'暂无'}}</view>
+        </view>
+      </view>
+      <view class='express-detail'>
+        <view class='item' wx:for="{{express.Traces}}">
+          <view class='radio {{index==0?"active":""}}'>
+          </view>
+          <view class='line' wx:if="{{index==0}}"></view>
+
+          <view class=''></view>
+          <view class='item-info flex-col-center'>
+            <view class='content {{index==0?"theme-word":""}}'>{{item.AcceptStation}}</view>
+            <view class='time'>{{item.AcceptTime}}</view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </van-popup>
+</view>

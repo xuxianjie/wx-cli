@@ -1,0 +1,94 @@
+<view class="container">
+  <login show="{{showBool}}" data-name="{{show}}" bindoverly="closeLogin" bindload="load"></login>
+    <form bindsubmit="putUserInfo">
+        <!-- field 输入框 -->
+        <van-cell-group>
+            <!-- 用户名 -->
+            <van-field
+              value="{{ username }}"
+              required
+              clearable
+              label="用户名"
+              icon=""
+              placeholder="请输入用户名"
+              bind:click-icon="onClickIcon"
+              name="userName"
+              title-width="200rpx"
+              border="{{ false }}" 
+            />
+            <!-- 性别 --> 
+            <van-cell title="性别" title-width="200rpx" size="large" required custom-class="lr" border="{{ false }}" >
+                  <van-radio-group value="{{ sex }}" bind:change="onChange" style="display:flex;" name="sex">
+                      <van-radio name="0" style='margin-right:40rpx;' >男</van-radio>
+                      <van-radio name="1"  >女</van-radio>
+                  </van-radio-group>
+            </van-cell>
+          
+            <!-- 日期选择 -->
+            <view class='lr'>
+              <view>开始日期</view>
+              <picker mode='date' bindchange="getStartTime" name="startTime"   class="{{startTime?'':'noInput'}}">
+                <text>{{startTime?startTime:'请设置活动开始时间'}}</text>
+              </picker>
+            </view>
+
+            <!-- 时间戳 -->
+            <view class='lr'>
+              <view>报名截止时间</view>
+              <picker 
+                name="deadline"
+                class="{{deadline?'':'noInput'}}" 
+                mode='multiSelector' 
+                bindchange='getDeadLine' 
+                value="{{time}}" 
+                range="{{timeArray}}" bindcolumnchang="setDeadLine">
+                {{deadline?deadline:'请输入报名截止时间'}}
+              </picker>
+            </view>
+
+            <!-- 短信验证 -->
+                       <view class='lr'>
+            <van-field
+              value="{{ sms }}"
+              center
+              clearable
+              label="短信验证码"
+              placeholder="请输入短信验证码"
+              use-button-slot
+              size="large"
+              title-width="200rpx"
+              border="{{false}}"
+
+            >
+              <van-button slot="button" size="small" type="primary">发送验证码</van-button>
+            </van-field>
+</view>
+            <!-- 个性签名 -->
+ 
+                        <van-field
+              value="{{ description }}"
+              clearable
+              type="textarea"
+              autosize
+              label="个性签名"
+              icon=""
+              placeholder="请输入用户名"
+              bind:click-icon="onClickIcon"
+              name="description"
+              size="large"
+              title-width="200rpx"
+              border="{{false}}"
+            />
+
+
+
+
+        </van-cell-group>
+
+
+
+        <!-- <van-button style="margin-top: 40rpx;" type="primary" size='large' form-type='submit'>提交</van-button> -->
+        <button form-type='submit' class='push-btn'>提交</button>
+    </form>
+
+</view>

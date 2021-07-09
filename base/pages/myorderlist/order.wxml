@@ -1,0 +1,45 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+
+<view class="container">
+  <view class='tab-list'>
+    <van-tabs bind:change="changeTab"  line-width="25" color="#4c8cfd" tab-active-class="tab-activie" custom-class="tab-nav"  tab-class="tab-nav"  border="{{false}}" active="{{ active }}" swipe-threshold='{{5}}'>
+      <!-- 参数	说明	类型	默认值
+        active	当前激活标签的索引	Number	0
+        color	标签颜色	String	#f44
+        z-index	z-index 层级	Number	1
+        type	样式风格，可选值为card	String	line
+        border	是否展示外边框，仅在line风格下生效	Boolean	true
+        duration	动画时间 (单位秒)	Number	0.3
+        line-width	底部条宽度 (px)	Number	与当前标签等宽
+        swipe-threshold	滚动阈值，设置标签数量超过多少个可滚动	Number	4
+        animated	是否使用动画切换 Tabs	Boolean	false
+        swipeable	是否开启手势滑动切换	Boolean	false
+        sticky	是否使用粘性定位布局	Boolean	false -->
+      <van-tab title="{{item.title}}" wx:for="{{tabList}}"></van-tab>
+    </van-tabs>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class='list'>
+      <van-panel title="下单时间：{{filter.filter.getDate(item.createTime,3)}}" desc="" status="{{item.status=='unpaid' ?'未支付':(item.status=='cancel'?'交易取消':(item.status=='delivered'?'已发货':(item.status=='completed'?'已完成':(item.status=='refunded'?'申请退款成功':(item.status=='fail'?'申请退款失败':(item.status=='refunding'?'申请退款中':(item.status=='unDelivered'?'待发货':(item.status=='received'?'已签收':''))))))))}}" use-footer-slot custom-class="item"  use-footer-slot="{{true}}" wx:for="{{orderList}}" bindtap="goDetail" data-index="{{index}}">
+        <view class='item-info'>
+          <view class='goods' wx:for="{{item.orderProductList}}">
+            <image src='{{filter.filter.addBaseUrl(item.imageUrl)}}' mode='aspectFill'  ></image>
+          </view>
+        </view>
+        <view slot="footer" class='item-b'>
+          <!-- <van-button size="small">按钮</van-button>
+          <van-button size="small" type="danger">按钮</van-button> -->
+          实付： <text style='color:#EB7B81'>￥{{item.totalPrice}}</text>
+        </view>
+      </van-panel>
+  </view>
+  <view class='no-list' wx:if="{{orderList.length<1}}">
+    <image src='../../images/nothing.png'></image>
+  </view>
+  <button open-type="contact" class="service-btn">
+    <image src="../../images/service_icon.png"></image>
+    <text>客服</text>
+  </button>
+</view>

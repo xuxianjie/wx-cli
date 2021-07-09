@@ -1,0 +1,100 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+<view class='container'>
+  <view class='top theme-back flex-row-center'>
+    <view style='font-size:28rpx'>
+      {{refund.status=='unpaid' ?'未支付':(refund.status=='cancel'?'交易取消':(refund.status=='delivered'?'已发货':(refund.status=='completed'?'已完成':(refund.status=='refunded'?'申请退款成功':(refund.status=='fail'?'申请退款失败':(refund.status=='refunding'?'申请退款中':(refund.status=='unDelivered'?'待发货':(refund.status=='received'?'已签收':''))))))))}}
+    </view>
+    <image src='../../images/truck.png' wx:if="{{refund.status == 'delivered' || refund.status== 'unDelivered'}}"></image>
+    <image src='../../images/money.png' style='width:60rpx;height:60rpx;' wx:if="{{refund.status == 'refunded' || refund.status== 'refunding' || refund.status== 'fail'}}"></image>
+
+  </view>
+
+  <view class='bottom-info flex-col-center' wx:if="{{refund.status=='refunded' || refund.status=='fail'}}">
+    <!-- <view class='title'>订单信息</view> -->
+    <view class='flex-row-center'>
+      <text>退款金额</text>
+      <text style="color:red;font-size:30rpx">￥{{refund.totalPrice}}</text>
+    </view>
+    <view class='flex-row-center'>
+      <text>退回路径</text>
+      <text>付款微信账号</text>
+    </view>
+  </view>
+
+
+  <view class='goods-list'>
+    <view class='goods-item flex-row' wx:for="{{refund.refundProductList}}" wx:key="{{id}}">
+
+      <view class='head'>
+        <image src='{{filter.filter.addBaseUrl(item.imageUrl)}}'></image>
+      </view>
+      <view class='info flex-col-center flex'>
+        <view class='name'>{{item.productName}}</view>
+        <view class='small-name'>{{item.taste}}{{item.color}}{{item.size}}{{item.spec}}</view>
+        <view style="display:flex">
+          <view class='price'>￥{{item.price}}</view>
+          <view class='operation flex-row-center'>
+            <!-- <view class='slice-num'>-</view>
+        <view class='step-input'>1</view>
+        <view class='add-num'>+</view> -->
+            ×{{item.quantity}}
+          </view>
+
+        </view>
+
+
+      </view>
+
+    </view>
+  </view>
+
+
+
+
+  <view class='bottom-info flex-col-center'>
+    <view class='title'>订单信息</view>
+    <view class='flex-row-center'>
+      <text>订单编号：</text>
+      <text>{{refund.number}}</text>
+    </view>
+    <view class='flex-row-center'>
+      <text>退款原因：</text>
+      <text >{{refund.reason || '未描述'}}</text>
+    </view>
+    <view class='flex-row-center'>
+      <text>退款金额：</text>
+      <text wx:if="{{refund.status=='refunded' || refund.status=='fail'}}">￥{{refund.totalPrice}}</text>
+      <text wx:if="{{!(refund.status=='refunded' || refund.status=='fail')}}">申请中</text>
+    </view>
+    <view class='flex-row-center'>
+      <text>下单时间：</text>
+      <text>{{filter.filter.getDate(refund.createTime,3)}}</text>
+    </view>
+  </view>
+
+
+
+  <!-- <view class='end flex-row-center'>
+
+    <navigator hover-class='none' url='../refundCreate/refundCreate?orderId={{order.id}}&number={{order.number}}' class='end-btn' wx:if="{{order.status == 'fail'}}">申请退货</navigator>
+
+
+  </view> -->
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 遮罩层 弹出框， 模态框，海报  -->
+  <van-popup custom-class="popup flex-col-center" show="{{ popupBool }}" overlay="true" bind:click-overlay="showPopup" close-on-click-overlay="true">
+
+  </van-popup>
+</view>

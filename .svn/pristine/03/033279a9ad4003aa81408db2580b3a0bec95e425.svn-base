@@ -1,0 +1,77 @@
+page {
+  background: rgb(239, 239, 240);
+}
+
+.cell-bottom>image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.cell-bottom {
+  /* padding-right: 100rpx; */
+  /* margin-top: 30rpx; */
+  display: flex;
+  align-items: center;
+}
+
+.cell-top {
+  display: flex;
+  flex-direction: row;
+}
+
+.fixed-btn {
+  height: 72rpx;
+  border-radius: 36rpx;
+  background:linear-gradient(#743CD1,#3A40B6);
+}
+
+.flex-col-center {
+  width: 95% !important;
+}
+
+.tag {
+  width: 110rpx;
+  height: 45rpx;
+  text-align: center;
+  line-height: 45rpx;
+  color: white;
+  background: #583ec4;
+ 
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  font-size: 24rpx;
+}
+
+.editor {
+  width: 20%;
+  align-items: center;
+  border-left: 2rpx solid rgb(192, 191, 191);
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  padding-bottom: 250rpx;
+}
+
+.location-another {
+  border-bottom: 1rpx solid #f6f6f6;
+  border: none;
+  padding: 0 45rpx;
+  display: flex;
+  align-items: center;
+}
+
+.van-swipe-cell__right {
+  width: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #583ec4;
+  color: #fff;
+}
+
+.cell-bottom {
+  /* padding-right: 100rpx; */
+  /* margin-top: 30rpx; */
+}

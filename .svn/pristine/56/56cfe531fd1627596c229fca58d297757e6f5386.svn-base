@@ -1,0 +1,84 @@
+<wxs src="../../filter/filter.wxs" module="filter" />
+<van-toast id="van-toast" />
+
+
+<view class="container">
+    <!-- 活动头部概况 -->
+  <view class="top flex-row-center shadow-bottom" >
+    <view class="top-img">
+      <image src="{{filter.filter.addBaseUrl(_detail.imageUrl)}}" mode="aspectFill"></image>
+    </view>
+    <view class="top-info flex-col-center flex">
+      <view class="top-name">{{_detail.name}}</view>
+      <view class="top-create-time">{{filter.filter.getDate(_detail.createTime,3)}}</view>
+      <view class="top-description">{{_detail.description}}</view>
+    </view>
+  </view>
+
+
+  <form bindsubmit="postInfo">
+    <!-- input-->
+    <view class='lr'>
+      <view>名称</view>
+      <input cursor-spacing='60' placeholder='请输入活动名称' placeholder-style='color:#b2b2b2' name="name"></input>
+    </view>
+
+    <!--textarea -->
+    <view class='desc' >
+      <view>活动详情</view>
+      <textarea 
+        class='descInfo' maxlength='-1' 
+        auto-height='true' cursor-spacing='60'
+        placeholder='请描述该活动详情（选填）' 
+        placeholder-style='color:#b2b2b2'
+        name="description">
+      </textarea>
+    </view> 
+
+    <!-- radio--> 
+    <van-cell title="性别" title-width="200rpx" size="large" required custom-class="lr" border="{{ false }}" >
+          <van-radio-group value="{{ gender }}" bind:change="changeGender" style="display:flex;" name="sex">
+              <van-radio name="0" style='margin-right:40rpx;' >男</van-radio>
+              <van-radio name="1"  >女</van-radio>
+          </van-radio-group>
+    </van-cell>
+            
+    <!-- 时间 YDM -->
+    <view class='lr'>
+      <view>开始时间</view>
+      <picker mode='date' bindchange="changeStartTime" class="{{startTime?'':'noInput'}}">
+        <text>{{startTime?startTime:'请设置活动开始时间'}}</text>
+      </picker>
+    </view>
+
+    <!-- 时间 YMDHM-->
+    <view class='lr'>
+      <view>报名截止时间</view>
+      <picker 
+        class="{{deadline?'':'noInput'}}" 
+        mode='multiSelector' 
+        bindchange='setDeadLine' 
+        bindcolumnchang="setDeadLine"
+        value="{{nowTime}}" 
+        range="{{timeArray}}" >
+        {{deadline?deadline:'请输入报名截止时间'}}
+      </picker>
+    </view>
+
+    <!-- 省市区 -->
+    <view class='lr'>
+      <view>区域</view>
+      <picker 
+        class="{{region?'':'noInput'}}" 
+        mode='region' 
+        bindchange="setRegion" 
+        bindcolumnchang="setRegion">
+        <text>{{region?region:'请设置活动所在区域'}}</text>
+      </picker>
+    </view>
+
+    <button form-type="submit" class="push-btn">
+      提交
+    </button>
+  </form>
+</view>

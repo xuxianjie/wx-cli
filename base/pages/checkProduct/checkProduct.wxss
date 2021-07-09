@@ -1,0 +1,142 @@
+page {
+  background: white;
+}
+
+.container {
+  padding-bottom: 110rpx;
+  min-height: 100%;
+  overflow: hidden;
+}
+.end{
+  height: 110rpx;
+}
+.top .status {
+  font-size: 24rpx;
+}
+
+.total {
+  height: 98rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 45rpx;
+  border-bottom: 10rpx solid #eeeeee;
+  color: black;
+  font-size: 26rpx;
+  font-weight: 700
+}
+
+.bottom {
+  font-size: 28rpx;
+  height: 80rpx;
+  padding: 0 45rpx 0 45rpx;
+  /* font-weight: 700; */
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.bottom-left {
+  color: #333;
+}
+
+.bottom-right {
+  font-weight: 700;
+}
+
+.box {
+  padding: 0 45rpx;
+  font-size: 28rpx;
+  height: 80rpx;
+}
+
+.coupon {
+  position: relative;
+  font-size: 24rpx;
+  color: #fff;
+  line-height: 44rpx;
+  height: 44rpx;
+  padding: 0 18rpx;
+  text-align: center;
+  margin-right: 20rpx;
+}
+
+.another-box {
+  margin: 0 auto;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.end {
+  justify-content: space-between;
+}
+
+.end-word {
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.level-cirlce {
+  margin-left: 0;
+  margin-right: 15rpx;
+}
+.tag{
+  font-size: 22rpx;
+  height: 34rpx;
+  line-height: 32rpx;
+  /* background-color: #EB7B81; */
+  padding: 0 12rpx;
+  margin-left: 24rpx;
+  margin-right: 24rpx;
+  /* border-radius: 8rpx; */
+  text-align: center;
+  color: white;
+  background: #583ec4;
+}
+
+.van-popup{
+  background-color: transparent !important;
+}
+
+.show-title{
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 55rpx;
+}
+
+.check-btn{
+  width: 500rpx;
+  border-radius: 18rpx;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 72rpx;
+  margin-top: 18rpx;
+}
+.show-balance{
+  font-size: 30rpx;
+  color: #444;
+  /* line-height: 40rpx; */
+}
+
+.van-radio__label{
+  margin-left: 40rpx;
+}
+.show-box{
+  padding: 30rpx 40rpx 50rpx;
+  /* padding-top: 5rpx; */
+  background-color: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  width: 600rpx;
+}
+.van-radio{
+  justify-content: center;
+  margin-bottom: 70rpx;
+}
+.show-title>image{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  padding: 20rpx;
+  margin-top: -20rpx;
+  margin-right: -20rpx;
+}

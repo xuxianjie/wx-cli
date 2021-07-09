@@ -1,0 +1,29 @@
+<!-- 海报模板 -->
+<view class='share_canvas' >
+    <!-- <view class='background draw'>
+      <image  class='draw' data-type='image'  data-url="../../images/activity.png" src='../../images/activity.png'></image>
+    </view> -->
+    <view class='share-box draw'>    
+      <view class='team draw' data-type="text" data-text="已有5个督导员团队创建">
+      已有5个督导员团队创建
+      </view>
+    </view>
+
+</view>
+
+<canvas canvas-id="canvas1" style="width: 565rpx;height:910rpx;" id="canvas1" catchtap="previewPoster" ></canvas>
+
+<!-- <view class='poster {{posterBool?"poster-active":""}}' bindtap='showPoster' catchtouchmove='prevent'>
+  
+</view> -->
+
+<van-popup
+  custom-class="poster flex-col-center-center"
+  show="{{ posterBool }}"
+  overlay="true"
+  bind:click-overlay="showPoster"
+  close-on-click-overlay= "true"
+>
+<image src='{{posterImg}}' style="width: 565rpx;height:910rpx;"  catchtap="previewPoster" ></image>
+  <button catchtap='savePoster'>保存到手机</button>
+</van-popup>

@@ -1,0 +1,122 @@
+.couponList{
+    margin-top: 40rpx;
+    width: 100%;
+    height: 100%;
+}
+.coupon{
+    width: 690rpx;
+    height: 168rpx;
+    margin: 0 auto 44rpx;
+    border-radius: 10rpx;
+    display: flex;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow:0px 1rpx 6rpx 0px rgba(215,214,214,0.8);
+}
+.coupon-l{
+    flex: 1;
+    height: 100%;
+    display: flex;
+    /* padding-left: 30rpx; */
+}
+
+.coupon-r{
+    width: 160rpx;
+    font-size: 36rpx;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* letter-spacing: 10rpx; */
+    text-align: center;
+}
+.coupon-r>view{
+    width: 146rpx;
+    height: 48rpx;
+    line-height: 48rpx;
+    text-align: center;
+    border-radius: 24rpx;
+    border: 1rpx solid #f45e63;
+    color: #f45e63;
+    font-size: 22rpx;
+}
+.coupon-l .coupon-l-l{
+    width: 160rpx;
+    /* font-size: 110rpx; */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ED5B60;
+    color: #fff;
+}
+.coupon-l .coupon-l-l .reduce{
+    font-size: 50rpx;
+    margin-bottom: 15rpx;
+}
+.coupon-l .coupon-l-l .reduce text{
+    font-size: 28rpx;
+    /* margin-bottom: 15rpx; */
+    margin-right: 10rpx;
+}
+.coupon-l .coupon-l-l .full{
+    font-size: 22rpx;
+}
+.coupon-l .coupon-l-r{
+    flex: 1;
+    padding: 10rpx ;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+
+
+}
+.coupon-l .coupon-l-r-t{
+    width: 100%;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        letter-spacing: 5rpx;
+    text-align: center;
+    font-size: 36rpx;
+    /* margin-bottom: 20rpx; */
+    padding: 0 20rpx
+    
+}
+.coupon-l  .coupon-l-r-b{
+    /* width: 156rpx; */
+    text-align: center;
+    font-size: 22rpx;
+        letter-spacing: 2rpx;
+
+}
+
+
+.showNo{
+  width: 308rpx;
+  height: 266rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 150rpx auto;
+}
+.showNo>image{
+  width: 80%;
+  height: 80%;
+}
+
+.b2{
+    color: #b2b2b2 !important;
+}
+.dd{
+    background-color: #ddd !important;
+}
+.bo{
+    border: 1rpx solid #ddd !important;
+}
